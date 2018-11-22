@@ -35,6 +35,7 @@ For your MCVE, you will have to adapt a few things, probably. This includes:
   
 In addition to the above, you probably need to adapt also:
 
+- The SQL script
 - The code generator configuration in the `pom.xml`
 - The actual test that is being run in `org.jooq.mcve.test.MCVETest`
 
