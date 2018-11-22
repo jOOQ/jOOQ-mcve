@@ -39,6 +39,20 @@ In addition to the above, you probably need to adapt also:
 - The code generator configuration in the `pom.xml`
 - The actual test that is being run in `org.jooq.mcve.test.MCVETest`
 
+When you've set up your MCVE, run these statements again:
+
+```
+mvn clean install
+```
+
+Notice that if you're using the same H2 database that was used initially, you may need to run
+
+```
+mvn flyway:clean
+```
+
+... in order to reset your database (**Beware: As it says. This resets your database**).
+
 ## How to submit your MCVE
 
 Found a way to reproduce the issue using the above procedure? Excellent! Now:
