@@ -29,6 +29,8 @@ For your MCVE, you will have to adapt a few things, probably. This includes:
   - Go to the `pom.xml` file, search for `maven-compiler-plugin`, and adapt the `<source>` and `<target>` version there.
 - The jOOQ version: 
   - Go to the `pom.xml` file, search for `org.jooq.version`, and adapt the version there.
+- The jOOQ distribution:
+  - If you're using the commercial distributions, go to the `pom.xml` file, search for `<groupId>org.jooq</groupId>`, and replace by the appropriate `groupId`. If you're using the Open Source distribution, no change is needed.
 - The JDBC driver: 
   - Go to the `pom.xml` file, replace the H2 driver `<dependency>` by yours, and adapt `${db.url}`, `${db.username}`, and `${db.password}`
   - Go to the `org.jooq.mcve.test.MCVETest` class and replace URL, username, and password there as well
