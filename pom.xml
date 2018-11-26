@@ -81,7 +81,7 @@
             </plugin>
 
             <plugin>
-                <groupId>org.jooq.trial</groupId>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${org.jooq.version}</version>
 
