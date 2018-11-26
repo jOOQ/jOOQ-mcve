@@ -20,7 +20,7 @@
 
         <!-- Database access -->
         <dependency>
-            <groupId>org.jooq.trial</groupId>
+            <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>${org.jooq.version}</version>
         </dependency>
