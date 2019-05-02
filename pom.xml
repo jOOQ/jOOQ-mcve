@@ -102,7 +102,17 @@
                             <generator>
                                 <database>
                                     <includes>.*</includes>
-                                    <inputSchema>mcve</inputSchema>
+                                    <schemata>
+                                        <!-- PostgreSQL is lower case by default -->
+                                        <schema>
+                                            <inputSchema>mcve</inputSchema>
+                                        </schema>
+
+                                        <!-- H2 and others are upper case by default -->
+                                        <schema>
+                                            <inputSchema>MCVE</inputSchema>
+                                        </schema>
+                                    </schemata>
                                 </database>
                                 <generate>
                                     <generatedAnnotation>false</generatedAnnotation>
