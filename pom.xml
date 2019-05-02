@@ -102,7 +102,7 @@
                             <generator>
                                 <database>
                                     <includes>.*</includes>
-                                    <inputSchema>MCVE</inputSchema>
+                                    <inputSchema>mcve</inputSchema>
                                 </database>
                                 <generate>
                                     <generatedAnnotation>false</generatedAnnotation>
