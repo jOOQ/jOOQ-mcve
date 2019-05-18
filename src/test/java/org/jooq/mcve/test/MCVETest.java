@@ -37,48 +37,45 @@
  */
 package org.jooq.mcve.test;
 
-import static org.jooq.mcve.Tables.TEST;
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.jooq.mcve.tables.records.TestRecord;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class MCVETest {
 
-    Connection connection;
-    DSLContext ctx;
-
-    @Before
-    public void setup() throws Exception {
-        connection = DriverManager.getConnection("jdbc:h2:~/mcve", "sa", "");
-        ctx = DSL.using(connection);
-    }
-
-    @After
-    public void after() throws Exception {
-        ctx = null;
-        connection.close();
-        connection = null;
+    @Test
+    public void testDropForeignKeyParses() {
+        String sql = "ALTER TABLE `address` DROP FOREIGN KEY `fk_address_city`;";
+        DSL.using(SQLDialect.MYSQL_8_0)
+           .parser()
+           .parse(sql);
     }
 
     @Test
-    public void mcveTest() {
-        TestRecord result =
-        ctx.insertInto(TEST)
-           .columns(TEST.VALUE)
-           .values(42)
-           .returning(TEST.ID)
-           .fetchOne();
-
-        result.refresh();
-        assertEquals(42, (int) result.getValue());
+    public void testYearDataType() {
+        String sql = "CREATE TABLE film (\n" +
+                "  film_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,\n" +
+                "  title VARCHAR(255) NOT NULL,\n" +
+                "  description TEXT DEFAULT NULL,\n" +
+                "  release_year YEAR DEFAULT NULL,\n" +
+                "  language_id TINYINT UNSIGNED NOT NULL,\n" +
+                "  original_language_id TINYINT UNSIGNED DEFAULT NULL,\n" +
+                "  rental_duration TINYINT UNSIGNED NOT NULL DEFAULT 3,\n" +
+                "  rental_rate DECIMAL(4,2) NOT NULL DEFAULT 4.99,\n" +
+                "  length SMALLINT UNSIGNED DEFAULT NULL,\n" +
+                "  replacement_cost DECIMAL(5,2) NOT NULL DEFAULT 19.99,\n" +
+                "  rating ENUM('G','PG','PG-13','R','NC-17') DEFAULT 'G',\n" +
+                "  special_features SET('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') DEFAULT NULL,\n" +
+                "  last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n" +
+                "  PRIMARY KEY  (film_id),\n" +
+                "  KEY idx_title (title),\n" +
+                "  KEY idx_fk_language_id (language_id),\n" +
+                "  KEY idx_fk_original_language_id (original_language_id),\n" +
+                "  CONSTRAINT fk_film_language FOREIGN KEY (language_id) REFERENCES language (language_id) ON DELETE RESTRICT ON UPDATE CASCADE,\n" +
+                "  CONSTRAINT fk_film_language_original FOREIGN KEY (original_language_id) REFERENCES language (language_id) ON DELETE RESTRICT ON UPDATE CASCADE\n" +
+                ")ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        DSL.using(SQLDialect.MYSQL_8_0)
+           .parser()
+           .parse(sql);
     }
 }
