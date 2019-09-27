@@ -87,7 +87,7 @@
 
                 <executions>
                     <execution>
-                        <id>java-generator</id>
+                        <id>default-cli</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
