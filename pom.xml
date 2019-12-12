@@ -10,9 +10,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.12.1</org.jooq.version>
-        <db.url>jdbc:h2:~/mcve</db.url>
-        <db.username>sa</db.username>
+        <org.jooq.version>3.13.0-SNAPSHOT</org.jooq.version>
+        <db.driver>org.postgresql.Driver</db.driver>
+        <db.url>jdbc:postgresql://localhost:26257/postgres</db.url>
+        <db.username>root</db.username>
         <db.password></db.password>
     </properties>
 
@@ -20,14 +21,14 @@
 
         <!-- Database access -->
         <dependency>
-            <groupId>org.jooq</groupId>
+            <groupId>org.jooq.pro</groupId>
             <artifactId>jooq</artifactId>
             <version>${org.jooq.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.199</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.8</version>
         </dependency>
 
         <!-- Logging -->
@@ -59,29 +60,42 @@
             </plugin>
 
             <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>5.2.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+
                 <executions>
                     <execution>
+                        <id>create-database-h2</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>migrate</goal>
+                            <goal>execute</goal>
                         </goals>
+                        <configuration>
+                            <driver>${db.driver}</driver>
+                            <url>${db.url}</url>
+                            <username>${db.username}</username>
+                            <password>${db.password}</password>
+
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/main/resources/db.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <url>${db.url}</url>
-                    <user>${db.username}</user>
-                    <password>${db.password}</password>
-                    <locations>
-                        <location>filesystem:src/main/resources/db/migration</location>
-                    </locations>
-                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.2.8</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
-                <groupId>org.jooq</groupId>
+                <groupId>org.jooq.pro</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${org.jooq.version}</version>
 
@@ -95,24 +109,16 @@
 
                         <configuration>
                             <jdbc>
+                                <driver>${db.driver}</driver>
                                 <url>${db.url}</url>
                                 <user>${db.username}</user>
                                 <password>${db.password}</password>
                             </jdbc>
                             <generator>
                                 <database>
-                                    <includes>.*</includes>
-                                    <schemata>
-                                        <!-- PostgreSQL is lower case by default -->
-                                        <schema>
-                                            <inputSchema>mcve</inputSchema>
-                                        </schema>
-
-                                        <!-- H2 and others are upper case by default -->
-                                        <schema>
-                                            <inputSchema>MCVE</inputSchema>
-                                        </schema>
-                                    </schemata>
+                                    <name>org.jooq.meta.cockroachdb.CockroachDBDatabase</name>
+                                    <includes>jooq_test</includes>
+                                    <inputSchema>public</inputSchema>
                                 </database>
                                 <generate>
                                     <generatedAnnotation>false</generatedAnnotation>
