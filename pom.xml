@@ -10,10 +10,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.13.1</org.jooq.version>
+        <org.jooq.version>3.14.3</org.jooq.version>
         <db.url>jdbc:h2:~/mcve</db.url>
         <db.username>sa</db.username>
         <db.password></db.password>
+        <kotlin.version>1.4.20-RC</kotlin.version>
+        <scala.version>2.13.1</scala.version>
     </properties>
 
     <dependencies>
@@ -27,7 +29,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.199</version>
+            <version>1.4.200</version>
         </dependency>
 
         <!-- Logging -->
@@ -44,10 +46,160 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Kotlin -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Scala -->
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq-codegen-maven</artifactId>
+                    <version>${org.jooq.version}</version>
+
+                    <configuration>
+                        <jdbc>
+                            <url>${db.url}</url>
+                            <user>${db.username}</user>
+                            <password>${db.password}</password>
+                        </jdbc>
+                        <generator>
+                            <database>
+                                <includes>.*</includes>
+                                <schemata>
+
+                                    <!-- PostgreSQL is lower case by default -->
+                                    <schema>
+                                        <inputSchema>mcve</inputSchema>
+                                    </schema>
+
+                                    <!-- H2 and others are upper case by default -->
+                                    <schema>
+                                        <inputSchema>MCVE</inputSchema>
+                                    </schema>
+                                </schemata>
+                            </database>
+                            <generate>
+                                <generatedAnnotation>false</generatedAnnotation>
+                            </generate>
+                        </generator>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/kotlin</source>
+                                <source>src/main/scala</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-sources</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/kotlin</source>
+                                <source>src/test/scala</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <source>src/main/kotlin</source>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <source>src/test/kotlin</source>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <args>-Xcheckinit</args>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -87,39 +239,53 @@
 
                 <executions>
                     <execution>
-                        <id>default-cli</id>
+                        <id>generate-java</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
 
                         <configuration>
-                            <jdbc>
-                                <url>${db.url}</url>
-                                <user>${db.username}</user>
-                                <password>${db.password}</password>
-                            </jdbc>
                             <generator>
-                                <database>
-                                    <includes>.*</includes>
-                                    <schemata>
-                                        <!-- PostgreSQL is lower case by default -->
-                                        <schema>
-                                            <inputSchema>mcve</inputSchema>
-                                        </schema>
-
-                                        <!-- H2 and others are upper case by default -->
-                                        <schema>
-                                            <inputSchema>MCVE</inputSchema>
-                                        </schema>
-                                    </schemata>
-                                </database>
-                                <generate>
-                                    <generatedAnnotation>false</generatedAnnotation>
-                                </generate>
                                 <target>
-                                    <packageName>org.jooq.mcve</packageName>
-                                    <directory>target/generated-sources/jooq-mcve</directory>
+                                    <packageName>org.jooq.mcve.java</packageName>
+                                    <directory>src/main/java</directory>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>generate-kotlin</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <generator>
+                                <name>org.jooq.codegen.KotlinGenerator</name>
+                                <target>
+                                    <packageName>org.jooq.mcve.kotlin</packageName>
+                                    <directory>src/main/kotlin</directory>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>generate-scala</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <generator>
+                                <name>org.jooq.codegen.ScalaGenerator</name>
+                                <target>
+                                    <packageName>org.jooq.mcve.scala</packageName>
+                                    <directory>src/main/scala</directory>
                                 </target>
                             </generator>
                         </configuration>
