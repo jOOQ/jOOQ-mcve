@@ -3,33 +3,43 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jooq.trial</groupId>
+    <groupId>${org.jooq.groupId}</groupId>
     <artifactId>jooq-mcve</artifactId>
     <version>1.0</version>
     <name>jOOQ MCVE</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- TODO: Change your jOOQ edition and version here -->
+        <org.jooq.groupId>org.jooq</org.jooq.groupId>
         <org.jooq.version>3.14.3</org.jooq.version>
+
+        <!-- TODO: Change the database driver configuration here and also in AbstractTest for the tests -->
         <db.url>jdbc:h2:~/mcve</db.url>
         <db.username>sa</db.username>
         <db.password></db.password>
+
+        <!-- TODO: Fix Java, kotlin, or scala versions -->
+        <java.version>11</java.version>
         <kotlin.version>1.4.20-RC</kotlin.version>
         <scala.version>2.13.1</scala.version>
     </properties>
 
     <dependencies>
 
-        <!-- Database access -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
-        </dependency>
+        <!-- TODO: Add your JDBC driver dependency here -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
+        </dependency>
+
+        <!-- Database access -->
+        <dependency>
+            <groupId>${org.jooq.groupId}</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${org.jooq.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -77,10 +87,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.jooq</groupId>
+                    <groupId>${org.jooq.groupId}</groupId>
                     <artifactId>jooq-codegen-maven</artifactId>
                     <version>${org.jooq.version}</version>
 
+                    <!-- TODO: Possibly edit the code generation configuration here, to reflect what you're doing -->
                     <configuration>
                         <jdbc>
                             <url>${db.url}</url>
@@ -194,10 +205,6 @@
                         </goals>
                     </execution>
                 </executions>
-
-                <configuration>
-                    <args>-Xcheckinit</args>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -205,8 +212,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
@@ -233,11 +240,13 @@
             </plugin>
 
             <plugin>
-                <groupId>org.jooq</groupId>
+                <groupId>${org.jooq.groupId}</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${org.jooq.version}</version>
 
                 <executions>
+
+                    <!-- TODO: Possibly delete the executions that you don't need -->
                     <execution>
                         <id>generate-java</id>
                         <phase>generate-sources</phase>
