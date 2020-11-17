@@ -10,7 +10,7 @@ Create a fork from this project and then
 ```
 git clone https://github.com/<your-user-name>/jOOQ-mcve
 cd jOOQ-mcve
-mvn clean install
+mvn verify
 ```
 
 It will:
