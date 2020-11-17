@@ -47,7 +47,7 @@ In addition to the above, you probably need to adapt also:
 When you've set up your MCVE, run these statements again:
 
 ```
-mvn clean install
+mvn clean verify
 ```
 
 Notice that if you're using the same H2 database that was used initially, you may need to run
@@ -63,7 +63,8 @@ mvn flyway:clean
 Found a way to reproduce the issue using the above procedure? Excellent! Now:
 
 ```
-git commit -am "MCVE for issue #1234"
+git add .
+git commit -m "MCVE for issue #1234"
 git push
 ```
 
