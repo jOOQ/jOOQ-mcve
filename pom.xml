@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>${org.jooq.groupId}</groupId>
+    <groupId>org.jooq</groupId>
     <artifactId>jooq-mcve</artifactId>
     <version>1.0</version>
     <name>jOOQ MCVE</name>
