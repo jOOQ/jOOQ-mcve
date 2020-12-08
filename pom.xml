@@ -13,8 +13,8 @@
 
         <!-- TODO: Change your jOOQ edition and version here -->
         <org.jooq.groupId>org.jooq</org.jooq.groupId>
-        <!-- <org.jooq.version>3.14.4</org.jooq.version> -->
-        <org.jooq.version>3.13.6</org.jooq.version>
+        <org.jooq.version>3.14.4</org.jooq.version>
+        <!-- <org.jooq.version>3.13.6</org.jooq.version> -->
 
         <!-- TODO: Change the database driver configuration here and also in AbstractTest for the tests -->
         <db.url>jdbc:postgresql://localhost:5432/sgsdev</db.url>
