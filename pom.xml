@@ -13,12 +13,13 @@
 
         <!-- TODO: Change your jOOQ edition and version here -->
         <org.jooq.groupId>org.jooq</org.jooq.groupId>
-        <org.jooq.version>3.14.3</org.jooq.version>
+        <!-- <org.jooq.version>3.14.4</org.jooq.version> -->
+        <org.jooq.version>3.13.6</org.jooq.version>
 
         <!-- TODO: Change the database driver configuration here and also in AbstractTest for the tests -->
-        <db.url>jdbc:h2:~/mcve</db.url>
-        <db.username>sa</db.username>
-        <db.password></db.password>
+        <db.url>jdbc:postgresql://localhost:5432/sgsdev</db.url>
+        <db.username>postgres</db.username>
+        <db.password>notnull</db.password>
 
         <!-- TODO: Fix Java, kotlin, or scala versions -->
         <java.version>11</java.version>
@@ -26,13 +27,47 @@
         <scala.version>2.13.1</scala.version>
     </properties>
 
-    <dependencies>
+	
+    <repositories>
+      <repository>
+	<id>sargent</id>
+	<name>anno</name>
+	<url>file:${project.basedir}/repo</url>
+      </repository>
+    </repositories>
 
+    <dependencies>
+        <dependency>
+            <groupId>edu.utah.camplab</groupId>
+            <artifactId>sgs-anno</artifactId>
+            <version>4.0.0-1</version>
+        </dependency>
+	<dependency>
+	  <groupId>com.fasterxml.jackson.datatype</groupId>
+	  <artifactId>jackson-datatype-jsr310</artifactId>
+	  <version>2.11.+</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-core</artifactId>
+	  <version>2.11.+</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-databind</artifactId>
+	  <version>2.11.+</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-annotations</artifactId>
+	  <version>2.11.+</version>
+	</dependency>
+      
         <!-- TODO: Add your JDBC driver dependency here -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.18</version>
         </dependency>
 
         <!-- Database access -->
@@ -81,6 +116,24 @@
             <artifactId>scala-compiler</artifactId>
             <version>${scala.version}</version>
         </dependency>
+        <!-- <dependency> -->
+        <!--             <groupId>${org.jooq.groupId}</groupId> -->
+        <!--             <artifactId>jooq-codegen</artifactId> -->
+        <!--             <version>${org.jooq.version}</version> -->
+        <!-- </dependency> -->
+
+        <!-- <dependency> -->
+        <!--             <groupId>${org.jooq.groupId}</groupId> -->
+        <!--             <artifactId>jooq-meta</artifactId> -->
+        <!--             <version>${org.jooq.version}</version> -->
+        <!-- </dependency> -->
+
+        <!-- <dependency> -->
+        <!--             <groupId>${org.jooq.groupId}</groupId> -->
+        <!--             <artifactId>jooq-tools</artifactId> -->
+        <!--             <version>${org.jooq.version}</version> -->
+        <!-- </dependency> -->
+		    
     </dependencies>
 
     <build>
@@ -91,6 +144,7 @@
                     <artifactId>jooq-codegen-maven</artifactId>
                     <version>${org.jooq.version}</version>
 
+
                     <!-- TODO: Possibly edit the code generation configuration here, to reflect what you're doing -->
                     <configuration>
                         <jdbc>
@@ -99,23 +153,34 @@
                             <password>${db.password}</password>
                         </jdbc>
                         <generator>
+			    <name>edu.utah.camplab.jooq.JxonAnnotationGenerator</name>
                             <database>
                                 <includes>.*</includes>
                                 <schemata>
 
                                     <!-- PostgreSQL is lower case by default -->
                                     <schema>
-                                        <inputSchema>mcve</inputSchema>
+                                        <inputSchema>base</inputSchema>
+                                        <inputSchema>sgstemplate</inputSchema>
+                                        <inputSchema>public</inputSchema>
                                     </schema>
-
                                     <!-- H2 and others are upper case by default -->
-                                    <schema>
-                                        <inputSchema>MCVE</inputSchema>
-                                    </schema>
+                                    <!-- <schema> -->
+                                    <!--     <inputSchema>MCVE</inputSchema> -->
+                                    <!-- </schema> -->
                                 </schemata>
                             </database>
                             <generate>
-                                <generatedAnnotation>false</generatedAnnotation>
+                              <!-- <generatedAnnotation>false</generatedAnnotation> -->
+			      <relations>true</relations>
+			      <pojos>true</pojos>
+			      <deprecated>false</deprecated>
+			      <records>true</records>
+			      <immutablePojos>false</immutablePojos>
+			      <fluentSetters>true</fluentSetters>
+			      <routines>true</routines>
+			      <globalRoutineReferences>true</globalRoutineReferences>
+			      <!-- <globalRoutineReferences>true</globalRoutineReferences> -->
                             </generate>
                         </generator>
                     </configuration>
@@ -264,41 +329,41 @@
                         </configuration>
                     </execution>
 
-                    <execution>
-                        <id>generate-kotlin</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
+                    <!-- <execution> -->
+                    <!--     <id>generate-kotlin</id> -->
+                    <!--     <phase>generate-sources</phase> -->
+                    <!--     <goals> -->
+                    <!--         <goal>generate</goal> -->
+                    <!--     </goals> -->
 
-                        <configuration>
-                            <generator>
-                                <name>org.jooq.codegen.KotlinGenerator</name>
-                                <target>
-                                    <packageName>org.jooq.mcve.kotlin</packageName>
-                                    <directory>src/main/kotlin</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
+                    <!--     <configuration> -->
+                    <!--         <generator> -->
+                    <!--             <name>org.jooq.codegen.KotlinGenerator</name> -->
+                    <!--             <target> -->
+                    <!--                 <packageName>org.jooq.mcve.kotlin</packageName> -->
+                    <!--                 <directory>src/main/kotlin</directory> -->
+                    <!--             </target> -->
+                    <!--         </generator> -->
+                    <!--     </configuration> -->
+                    <!-- </execution> -->
 
-                    <execution>
-                        <id>generate-scala</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
+                    <!-- <execution> -->
+                    <!--     <id>generate-scala</id> -->
+                    <!--     <phase>generate-sources</phase> -->
+                    <!--     <goals> -->
+                    <!--         <goal>generate</goal> -->
+                    <!--     </goals> -->
 
-                        <configuration>
-                            <generator>
-                                <name>org.jooq.codegen.ScalaGenerator</name>
-                                <target>
-                                    <packageName>org.jooq.mcve.scala</packageName>
-                                    <directory>src/main/scala</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
+                    <!--     <configuration> -->
+                    <!--         <generator> -->
+                    <!--             <name>org.jooq.codegen.ScalaGenerator</name> -->
+                    <!--             <target> -->
+                    <!--                 <packageName>org.jooq.mcve.scala</packageName> -->
+                    <!--                 <directory>src/main/scala</directory> -->
+                    <!--             </target> -->
+                    <!--         </generator> -->
+                    <!--     </configuration> -->
+                    <!-- </execution> -->
                 </executions>
             </plugin>
         </plugins>
