@@ -1,6 +1,6 @@
 Thank you very much for taking the time to report a bug to us, we greatly
 appreciate it. Even more so, since you are about to take the time to create an
-MCVE (Minimal Complete Verifiable Example). Thanks to you, we can make jOOQ an
+[MCVE (Minimal Complete Verifiable Example)](https://stackoverflow.com/help/minimal-reproducible-example). Thanks to you, we can make jOOQ an
 even better product!
 
 ## How to use this project to prepare your MCVE
