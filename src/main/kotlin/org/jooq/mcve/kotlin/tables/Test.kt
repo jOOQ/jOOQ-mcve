@@ -4,8 +4,6 @@
 package org.jooq.mcve.kotlin.tables
 
 
-import kotlin.collections.List
-
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.Identity
@@ -51,7 +49,7 @@ open class Test(
         /**
          * The reference instance of <code>MCVE.TEST</code>
          */
-        val TEST = Test()
+        val TEST: Test = Test()
     }
 
     /**
@@ -88,10 +86,9 @@ open class Test(
     constructor(): this(DSL.name("TEST"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, TestRecord>): this(Internal.createPathAlias(child, key), child, key, TEST, null)
-    override fun getSchema(): Schema = Mcve.MCVE
+    override fun getSchema(): Schema? = if (aliased()) null else Mcve.MCVE
     override fun getIdentity(): Identity<TestRecord, Int?> = super.getIdentity() as Identity<TestRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<TestRecord> = PK_TEST
-    override fun getKeys(): List<UniqueKey<TestRecord>> = listOf(PK_TEST)
     override fun `as`(alias: String): Test = Test(DSL.name(alias), this)
     override fun `as`(alias: Name): Test = Test(alias, this)
 

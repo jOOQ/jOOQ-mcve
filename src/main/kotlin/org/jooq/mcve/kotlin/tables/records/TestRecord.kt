@@ -19,12 +19,12 @@ import org.jooq.mcve.kotlin.tables.Test
 open class TestRecord() : UpdatableRecordImpl<TestRecord>(Test.TEST), Record2<Int?, Int?> {
 
     var id: Int?
-        set(value) = set(0, value)
-        get() = get(0) as Int?
+        set(value): Unit = set(0, value)
+        get(): Int? = get(0) as Int?
 
     var value: Int?
-        set(value) = set(1, value)
-        get() = get(1) as Int?
+        set(value): Unit = set(1, value)
+        get(): Int? = get(1) as Int?
 
     // -------------------------------------------------------------------------
     // Primary key information

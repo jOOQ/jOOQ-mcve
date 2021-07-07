@@ -4,9 +4,6 @@
 package org.jooq.mcve.java.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -92,7 +89,7 @@ public class Test extends TableImpl<TestRecord> {
 
     @Override
     public Schema getSchema() {
-        return Mcve.MCVE;
+        return aliased() ? null : Mcve.MCVE;
     }
 
     @Override
@@ -103,11 +100,6 @@ public class Test extends TableImpl<TestRecord> {
     @Override
     public UniqueKey<TestRecord> getPrimaryKey() {
         return Keys.PK_TEST;
-    }
-
-    @Override
-    public List<UniqueKey<TestRecord>> getKeys() {
-        return Arrays.<UniqueKey<TestRecord>>asList(Keys.PK_TEST);
     }
 
     @Override

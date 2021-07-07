@@ -11,4 +11,4 @@ import org.jooq.mcve.kotlin.tables.Test
 /**
  * The table <code>MCVE.TEST</code>.
  */
-val TEST = Test.TEST
+val TEST: Test = Test.TEST

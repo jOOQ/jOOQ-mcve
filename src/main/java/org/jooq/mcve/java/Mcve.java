@@ -46,7 +46,8 @@ public class Mcve extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
-            Test.TEST);
+        return Arrays.asList(
+            Test.TEST
+        );
     }
 }

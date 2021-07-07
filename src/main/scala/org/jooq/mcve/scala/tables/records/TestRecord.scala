@@ -29,7 +29,7 @@ class TestRecord extends UpdatableRecordImpl[TestRecord](Test.TEST) with Record2
   /**
    * Getter for <code>MCVE.TEST.ID</code>.
    */
-  def getId(): Integer = get(0).asInstanceOf[Integer]
+  def getId: Integer = get(0).asInstanceOf[Integer]
 
   /**
    * Setter for <code>MCVE.TEST.VALUE</code>.
@@ -41,7 +41,7 @@ class TestRecord extends UpdatableRecordImpl[TestRecord](Test.TEST) with Record2
   /**
    * Getter for <code>MCVE.TEST.VALUE</code>.
    */
-  def getValue(): Integer = get(1).asInstanceOf[Integer]
+  def getValue: Integer = get(1).asInstanceOf[Integer]
 
   // -------------------------------------------------------------------------
   // Primary key information

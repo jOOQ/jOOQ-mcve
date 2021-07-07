@@ -7,8 +7,6 @@ package org.jooq.mcve.scala.tables
 import java.lang.Class
 import java.lang.Integer
 import java.lang.String
-import java.util.Arrays
-import java.util.List
 
 import org.jooq.Field
 import org.jooq.ForeignKey
@@ -95,13 +93,11 @@ extends TableImpl[TestRecord](
 
   def this(child: Table[_ <: Record], key: ForeignKey[_ <: Record, TestRecord]) = this(Internal.createPathAlias(child, key), child, key, org.jooq.mcve.scala.tables.Test.TEST, null)
 
-  override def getSchema: Schema = Mcve.MCVE
+  override def getSchema: Schema = if (aliased()) null else Mcve.MCVE
 
   override def getIdentity: Identity[TestRecord, Integer] = super.getIdentity.asInstanceOf[ Identity[TestRecord, Integer] ]
 
   override def getPrimaryKey: UniqueKey[TestRecord] = Keys.PK_TEST
-
-  override def getKeys: List[ UniqueKey[TestRecord] ] = Arrays.asList[ UniqueKey[TestRecord] ](Keys.PK_TEST)
   override def as(alias: String): Test = new Test(DSL.name(alias), this)
   override def as(alias: Name): Test = new Test(alias, this)
 

@@ -13,7 +13,7 @@
 
         <!-- TODO: Change your jOOQ edition and version here -->
         <org.jooq.groupId>org.jooq</org.jooq.groupId>
-        <org.jooq.version>3.14.4</org.jooq.version>
+        <org.jooq.version>3.15.0</org.jooq.version>
 
         <!-- TODO: Change the database driver configuration here and also in AbstractTest for the tests -->
         <db.url>jdbc:h2:~/mcve</db.url>
@@ -22,8 +22,8 @@
 
         <!-- TODO: Fix Java, kotlin, or scala versions -->
         <java.version>11</java.version>
-        <kotlin.version>1.4.20-RC</kotlin.version>
-        <scala.version>2.13.1</scala.version>
+        <kotlin.version>1.5.20</kotlin.version>
+        <scala.version>2.13.6</scala.version>
     </properties>
 
     <dependencies>
@@ -196,7 +196,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>4.3.0</version>
+                <version>4.5.3</version>
                 <executions>
                     <execution>
                         <goals>
@@ -220,7 +220,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>5.2.1</version>
+                <version>7.11.0</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>

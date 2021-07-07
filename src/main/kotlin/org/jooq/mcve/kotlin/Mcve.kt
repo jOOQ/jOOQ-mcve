@@ -17,18 +17,18 @@ import org.jooq.mcve.kotlin.tables.Test
  */
 @Suppress("UNCHECKED_CAST")
 open class Mcve : SchemaImpl("MCVE", DefaultCatalog.DEFAULT_CATALOG) {
-    companion object {
+    public companion object {
 
         /**
          * The reference instance of <code>MCVE</code>
          */
-        val MCVE = Mcve()
+        val MCVE: Mcve = Mcve()
     }
 
     /**
      * The table <code>MCVE.TEST</code>.
      */
-    val TEST get() = Test.TEST
+    val TEST: Test get() = Test.TEST
 
     override fun getCatalog(): Catalog = DefaultCatalog.DEFAULT_CATALOG
 
