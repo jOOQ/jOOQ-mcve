@@ -51,7 +51,7 @@ mvn clean verify
 Notice that if you're using the same H2 database that was used initially, you may need to run
 
 ```
-mvn flyway:clean
+mvn -pl jooq-mcve-java,jooq-mcve-kotlin,jooq-mcve-scala flyway:clean
 ```
 
 ... in order to reset your database (**Beware: As it says. This resets your database**).
