@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <jdbc>
+    <url>jdbc:tc:mysql:8://localhost/mcve</url>
+    <user>root</user>
+    <password>test</password>
+  </jdbc>
+  <generator>
+    <database>
+      <includes>.*</includes>
+      <forcedTypes>
+        <forcedType>
+          <name>BIGINT</name>
+          <types>BIGINT UNSIGNED.*</types>
+        </forcedType>
+      </forcedTypes>
+      <schemata>
+        <!-- PostgreSQL is lower case by default -->
+        <schema>
+          <inputSchema>mcve</inputSchema>
+        </schema>
+
+        <!-- H2 and others are upper case by default -->
+        <schema>
+          <inputSchema>MCVE</inputSchema>
+        </schema>
+      </schemata>
+    </database>
+    <generate>
+      <generatedAnnotation>false</generatedAnnotation>
+    </generate>
+    <target>
+      <packageName>org.jooq.mcve</packageName>
+      <directory>target/generated-sources/jooq-mcve</directory>
+    </target>
+  </generator>
+</configuration>

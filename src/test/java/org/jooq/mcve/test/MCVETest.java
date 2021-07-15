@@ -37,48 +37,54 @@
  */
 package org.jooq.mcve.test;
 
-import static org.jooq.mcve.Tables.TEST;
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-
+import org.flywaydb.core.Flyway;
 import org.jooq.DSLContext;
+import org.jooq.DeleteConditionStep;
 import org.jooq.impl.DSL;
-import org.jooq.mcve.tables.records.TestRecord;
-
+import org.jooq.mcve.tables.records.TRecord;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import static org.jooq.mcve.Tables.T;
+import static org.jooq.mcve.Tables.U;
+
+/**
+ * Because a test container is used to generate sources you need to run <i>RunCodeGenerator</i> first.
+ * Which means you might need to comment out compiles errors in here first to get RunCodeGenerator to run.
+ * Then uncomment and run this test.
+ */
 public class MCVETest {
 
-    Connection connection;
-    DSLContext ctx;
+  Connection connection;
+  DSLContext ctx;
 
-    @Before
-    public void setup() throws Exception {
-        connection = DriverManager.getConnection("jdbc:h2:~/mcve", "sa", "");
-        ctx = DSL.using(connection);
-    }
+  @Before
+  public void setup() throws Exception {
+    var url = "jdbc:tc:mysql:8://localhost/mcve";
+    connection = DriverManager.getConnection(url);
+    ctx = DSL.using(connection);
 
-    @After
-    public void after() throws Exception {
-        ctx = null;
-        connection.close();
-        connection = null;
-    }
+    var flyway = Flyway.configure().dataSource(url, "", "").load();
+    flyway.migrate();
+  }
 
-    @Test
-    public void mcveTest() {
-        TestRecord result =
-        ctx.insertInto(TEST)
-           .columns(TEST.VALUE)
-           .values(42)
-           .returning(TEST.ID)
-           .fetchOne();
+  @After
+  public void after() throws Exception {
+    ctx = null;
+    connection.close();
+    connection = null;
+  }
 
-        result.refresh();
-        assertEquals(42, (int) result.getValue());
-    }
+  @Test
+  public void mcveTest() {
+    var query = ctx.deleteFrom(T)
+        .using(T.join(U).on(T.I.eq(U.J)))
+        .where(T.I.eq(1));
+    System.out.println(query);
+    query.execute();
+  }
 }
