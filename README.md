@@ -13,25 +13,25 @@ cd jOOQ-mcve
 mvn verify
 ```
 
-It will:
+It will, for each supported language (java, kotlin, scala):
 
 - Use Flyway to install a sample schema located in `src/main/resources/db/migration` into an H2 database
 - Run jOOQ's code generator on it
 - Run a simple integration test
 
-This should work without any additional setup on your side.
+This should work without any additional setup on your side, other than having a JDK and Maven available.
 
 ## How to prepare your MCVE
 
 For your MCVE, you will have to adapt a few things, probably. All likely locations that may need adaptation are marked with "TODO". This includes:
 
 - The Java / kotlin / scala version: 
-  - Go to the `pom.xml` file, search for `java.version`, `kotlin.version`, `scala.version`, and adapt the version there.
+  - Go to the relevant `pom.xml` file, search for `java.version`, `kotlin.version`, `scala.version`, and adapt the version there.
 - The jOOQ edition and version: 
-  - Go to the `pom.xml` file, search for `org.jooq.groupId` and `org.jooq.version`, and adapt the version there.
+  - Go to the relevant `pom.xml` file, search for `org.jooq.groupId` and `org.jooq.version`, and adapt the version there.
 - The JDBC driver: 
-  - Go to the `pom.xml` file, replace the H2 driver `<dependency>` by yours, and adapt `${db.url}`, `${db.username}`, and `${db.password}`
-  - Go to the `org.jooq.mcve.test.java.AbstractTest` class and replace URL, username, and password there as well
+  - Go to the relevant `pom.xml` file, replace the H2 driver `<dependency>` by yours, and adapt `${db.url}`, `${db.username}`, and `${db.password}`
+  - Go to the relevant test class (`org.jooq.mcve.test.java.JavaTest`, `org.jooq.mcve.test.kotlin.KotlinTest`, or `org.jooq.mcve.test.scala.ScalaTest`) and replace URL, username, and password there as well
   
 In addition to the above, you probably need to adapt also:
 
