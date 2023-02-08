@@ -63,7 +63,7 @@ mvn -pl jooq-mcve-java-h2,jooq-mcve-kotlin-h2,jooq-mcve-scala-h2 flyway:clean
 
 ## How to submit your MCVE
 
-Found a way to reproduce the issue using the above procedure? Excellent! Now:
+Found a way to reproduce the issue using the above procedure? Excellent! Now, either commit the change to your fork:
 
 ```
 git add .
@@ -71,6 +71,6 @@ git commit -m "MCVE for issue #1234"
 git push
 ```
 
-And include a link to your repository `https://github.com/<your-user-name>/jOOQ-mcve` in your issue report. Done!
+And include a link to your repository `https://github.com/<your-user-name>/jOOQ-mcve` in your issue report. Or, just attach a zip file of the project to the issue. Done!
 
 Thanks again for taking the time to do this. Looking forward to your MCVE
