@@ -22,11 +22,11 @@
     </properties>
 
     <modules>
-        <module>jooq-mcve-java-h2</module>
-        <module>jooq-mcve-java-postgres</module>
-        <module>jooq-mcve-kotlin-h2</module>
-        <module>jooq-mcve-kotlin-postgres</module>
-        <module>jooq-mcve-scala-h2</module>
-        <module>jooq-mcve-scala-postgres</module>
+        <module>jOOQ-mcve-java-h2</module>
+        <module>jOOQ-mcve-java-postgres</module>
+        <module>jOOQ-mcve-kotlin-h2</module>
+        <module>jOOQ-mcve-kotlin-postgres</module>
+        <module>jOOQ-mcve-scala-h2</module>
+        <module>jOOQ-mcve-scala-postgres</module>
     </modules>
 </project>
