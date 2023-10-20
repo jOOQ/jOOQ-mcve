@@ -10,17 +10,18 @@ Create a fork from this project and then
 ```
 git clone https://github.com/<your-user-name>/jOOQ-mcve
 cd jOOQ-mcve
+cd <relevant module>
 mvn verify
 ```
 
-It will, for each supported language (java, kotlin, scala) and example SQL dialect (H2, MySQL, PostgreSQL):
+It will, for each supported language (java, kotlin, scala) and example SQL dialect (H2, MySQL, Oracle, PostgreSQL, SQL Server):
 
-- Use testcontainers (for MySQL, PostgreSQL) to set up a database instance, and make it available to jOOQ and JUnit
-- Install a sample schema located in `src/main/resources/db/migration` into an file-based H2 database or testcontainers managed MySQL, PostgreSQL database
+- Use testcontainers (for MySQL, Oracle, PostgreSQL, SQL Server) to set up a database instance, and make it available to jOOQ and JUnit
+- Install a sample schema located in `src/main/resources/db/migration` into an file-based H2 database or testcontainers managed MySQL, Oracle, PostgreSQL, SQL Server database
 - Run jOOQ's code generator on it
 - Run a simple integration test
 
-This should work without any additional setup on your side, other than having a JDK, Maven, and Docker available. If you do not have Docker, you can still run the H2 based examples directly, ignoring the MySQL, PostgreSQL based ones.
+This should work without any additional setup on your side, other than having a JDK, Maven, and Docker available, as well as the commercial distribution of jOOQ installed, if you need that for Oracle or SQL Server. If you do not have Docker, you can still run the H2 based examples directly, ignoring the MySQL, Oracle, PostgreSQL, SQL Server based ones.
 
 ## How to prepare your MCVE
 
@@ -31,8 +32,8 @@ For your MCVE, you will have to adapt a few things, probably. All likely locatio
 - The jOOQ edition and version: 
   - Go to the relevant `pom.xml` file, search for `org.jooq.groupId` and `org.jooq.version`, and adapt the version there.
 - The JDBC driver: 
-  - Go to the relevant `pom.xml` file, replace the H2, MySQL, or PostgreSQL driver `<dependency>` by yours, and adapt `${db.url}`, `${db.username}`, and `${db.password}`
-  - Go to the relevant `pom.xml` file, replace the testcontainers integration, if applicable (e.g. to create MySQL, Oracle, SQL Server, etc. examples).
+  - Go to the relevant `pom.xml` file, replace the H2, MySQL, Oracle, PostgreSQL, or SQL Server driver `<dependency>` by yours, and adapt `${db.url}`, `${db.username}`, and `${db.password}`
+  - Go to the relevant `pom.xml` file, replace the testcontainers integration, if applicable.
   - Go to the relevant test class (`org.jooq.mcve.test.java.JavaTest`, `org.jooq.mcve.test.kotlin.KotlinTest`, or `org.jooq.mcve.test.scala.ScalaTest`) and replace URL, username, and password there as well, if applicable
   
 In addition to the above, you probably need to adapt also:
@@ -42,13 +43,19 @@ In addition to the above, you probably need to adapt also:
 - The actual test that is being run in any of (depending on what you're using):
   - `org.jooq.mcve.test.java.h2.JavaTest`
   - `org.jooq.mcve.test.java.mysql.JavaTest`
+  - `org.jooq.mcve.test.java.oracle.JavaTest`
   - `org.jooq.mcve.test.java.postgres.JavaTest`
+  - `org.jooq.mcve.test.java.sqlserver.JavaTest`
   - `org.jooq.mcve.test.kotlin.h2.KotlinTest`
   - `org.jooq.mcve.test.kotlin.mysql.KotlinTest`
+  - `org.jooq.mcve.test.kotlin.oracle.KotlinTest`
   - `org.jooq.mcve.test.kotlin.postgres.KotlinTest`
+  - `org.jooq.mcve.test.kotlin.sqlserver.KotlinTest`
   - `org.jooq.mcve.test.scala.h2.ScalaTest`
   - `org.jooq.mcve.test.scala.mysql.ScalaTest`
+  - `org.jooq.mcve.test.scala.oracle.ScalaTest`
   - `org.jooq.mcve.test.scala.postgres.ScalaTest`
+  - `org.jooq.mcve.test.scala.sqlserver.ScalaTest`
 
 When you've set up your MCVE, run these statements again:
 
