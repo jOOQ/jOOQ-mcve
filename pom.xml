@@ -26,6 +26,7 @@
         <module>jOOQ-mcve-java-mysql</module>
         <module>jOOQ-mcve-java-oracle</module>
         <module>jOOQ-mcve-java-postgres</module>
+        <module>jOOQ-mcve-java-sqlserver</module>
         <module>jOOQ-mcve-kotlin-h2</module>
         <module>jOOQ-mcve-kotlin-mysql</module>
         <module>jOOQ-mcve-kotlin-oracle</module>
