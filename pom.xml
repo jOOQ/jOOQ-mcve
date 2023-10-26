@@ -23,6 +23,7 @@
 
     <modules>
         <module>jOOQ-mcve-java-h2</module>
+        <module>jOOQ-mcve-java-mariadb</module>
         <module>jOOQ-mcve-java-mysql</module>
         <module>jOOQ-mcve-java-oracle</module>
         <module>jOOQ-mcve-java-postgres</module>
