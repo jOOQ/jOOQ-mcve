@@ -21,6 +21,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- TODO: Using the experimental support for our commercial artifact repository.
+         In order to use it, configure the jooq-pro server in your settings.xml as instructed here: https://repo.jooq.org -->
+    <repositories>
+        <repository>
+            <id>jooq-pro</id>
+            <url>https://repo.jooq.org/repo</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jooq-pro</id>
+            <url>https://repo.jooq.org/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <modules>
         <module>jOOQ-mcve-java-h2</module>
         <module>jOOQ-mcve-java-mariadb</module>
