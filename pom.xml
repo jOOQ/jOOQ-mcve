@@ -27,18 +27,21 @@
         <module>jOOQ-mcve-java-mysql</module>
         <module>jOOQ-mcve-java-oracle</module>
         <module>jOOQ-mcve-java-postgres</module>
+        <module>jOOQ-mcve-java-sqlite</module>
         <module>jOOQ-mcve-java-sqlserver</module>
         <module>jOOQ-mcve-kotlin-h2</module>
         <module>jOOQ-mcve-kotlin-mariadb</module>
         <module>jOOQ-mcve-kotlin-mysql</module>
         <module>jOOQ-mcve-kotlin-oracle</module>
         <module>jOOQ-mcve-kotlin-postgres</module>
+        <module>jOOQ-mcve-kotlin-sqlite</module>
         <module>jOOQ-mcve-kotlin-sqlserver</module>
         <module>jOOQ-mcve-scala-h2</module>
         <module>jOOQ-mcve-scala-mariadb</module>
         <module>jOOQ-mcve-scala-mysql</module>
         <module>jOOQ-mcve-scala-oracle</module>
         <module>jOOQ-mcve-scala-postgres</module>
+        <module>jOOQ-mcve-scala-sqlite</module>
         <module>jOOQ-mcve-scala-sqlserver</module>
     </modules>
 </project>
