@@ -2,5 +2,7 @@
 /.project
 /.settings
 /.idea
+/.gradle
 /target
+**/build
 /*.iml
