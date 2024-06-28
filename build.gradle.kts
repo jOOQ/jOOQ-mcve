@@ -3,6 +3,13 @@ subprojects {
         mavenLocal()
         mavenCentral()
         maven {
+            url = uri("https://repo.jooq.org/repo")
+            credentials {
+                username = System.getProperty("jooqUsername")
+                password = System.getProperty("jooqPassword")
+            }
+        }
+        maven {
             url = uri("https://repo.jooq.org/snapshots")
             credentials {
                 username = System.getProperty("jooqUsername")
