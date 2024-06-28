@@ -32,7 +32,7 @@ For your MCVE, you will have to adapt a few things, probably. All likely locatio
 - The jOOQ edition and version: 
   - Go to the relevant `pom.xml` file, search for `org.jooq.groupId` and `org.jooq.version`, and adapt the version there.
 - The JDBC driver: 
-  - Go to the relevant `pom.xml` file, replace the H2, MySQL, Oracle, PostgreSQL, or SQL Server driver `<dependency>` by yours, and adapt `${db.url}`, `${db.username}`, and `${db.password}`
+  - Go to the relevant `pom.xml` file, replace the H2, MySQL, Oracle, PostgreSQL, or SQL Server driver `<dependency>` by yours, and adapt `${jooq.codegen.jdbc.url}`, `${jooq.codegen.jdbc.username}`, and `${jooq.codegen.jdbc.password}`
   - Go to the relevant `pom.xml` file, replace the testcontainers integration, if applicable.
   - Go to the relevant test class (`org.jooq.mcve.test.java.JavaTest`, `org.jooq.mcve.test.kotlin.KotlinTest`, or `org.jooq.mcve.test.scala.ScalaTest`) and replace URL, username, and password there as well, if applicable
   
