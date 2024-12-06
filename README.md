@@ -10,36 +10,40 @@ Create a fork from this project and then
 ```
 git clone https://github.com/<your-user-name>/jOOQ-mcve
 cd jOOQ-mcve
+```
+
+### If using Maven
+
+```
 cd <relevant module>
 mvn verify
 ```
 
-It will, for each supported language (java, kotlin, scala) and example SQL dialect (H2, MySQL, Oracle, PostgreSQL, SQL Server):
+### If using Gradle
 
-- Use testcontainers (for MySQL, Oracle, PostgreSQL, SQL Server) to set up a database instance, and make it available to jOOQ and JUnit
-- Install a sample schema located in `src/main/resources/db/migration` into an file-based H2 database or testcontainers managed MySQL, Oracle, PostgreSQL, SQL Server database
-- Run jOOQ's code generator on it
-- Run a simple integration test
-
-This should work without any additional setup on your side, other than having a JDK, Maven, and Docker available, as well as the commercial distribution of jOOQ installed, if you need that for Oracle or SQL Server. If you do not have Docker, you can still run the H2 based examples directly, ignoring the MySQL, Oracle, PostgreSQL, SQL Server based ones.
+```
+./gradlew :<relevant subproject>:check
+```
 
 ## How to prepare your MCVE
 
 For your MCVE, you will have to adapt a few things, probably. All likely locations that may need adaptation are marked with "TODO". This includes:
 
-- The Java / kotlin / scala version: 
-  - Go to the relevant `pom.xml` file, search for `java.version`, `kotlin.version`, `scala.version`, and adapt the version there.
+- The Java / kotlin / scala version (only if the Java version is important for your MCVE): 
+  - **Using Maven** Go to the relevant `pom.xml` file, search for `java.version`, `kotlin.version`, `scala.version`, and adapt the version there.
+  - **Using Gradle** We're currently working with the defaults only
 - The jOOQ edition and version: 
-  - Go to the relevant `pom.xml` file, search for `org.jooq.groupId` and `org.jooq.version`, and adapt the version there.
+  - **Using Maven** Go to the relevant `pom.xml` file, search for `org.jooq.groupId` and `org.jooq.version`, and adapt the version there.
+  - **Using Gradle** Go to the main `build.gradle.kts` file and update `group` and `version` variables
 - The JDBC driver: 
-  - Go to the relevant `pom.xml` file, replace the H2, MySQL, Oracle, PostgreSQL, or SQL Server driver `<dependency>` by yours, and adapt `${jooq.codegen.jdbc.url}`, `${jooq.codegen.jdbc.username}`, and `${jooq.codegen.jdbc.password}`
-  - Go to the relevant `pom.xml` file, replace the testcontainers integration, if applicable.
+  - **Using Maven** Go to the relevant `pom.xml` file, replace the H2, MySQL, Oracle, PostgreSQL, or SQL Server driver `<dependency>` by yours, and adapt `${jooq.codegen.jdbc.url}`, `${jooq.codegen.jdbc.username}`, and `${jooq.codegen.jdbc.password}`, and replace the testcontainers integration, if applicable.
+  - **Using Gradle** Go to the relevant `build.gradle.kts` file, replace the H2, MySQL, Oracle, PostgreSQL, or SQL Server driver in `dependencies { .. }` by yours, and adapt `${jooq.codegen.jdbc.url}`, `dbUsername`, and `dbPassword` variables, and replace the testcontainers integration, if applicable.
   - Go to the relevant test class (`org.jooq.mcve.test.java.JavaTest`, `org.jooq.mcve.test.kotlin.KotlinTest`, or `org.jooq.mcve.test.scala.ScalaTest`) and replace URL, username, and password there as well, if applicable
   
 In addition to the above, you probably need to adapt also:
 
 - The SQL script
-- The code generator configuration in the `pom.xml`
+- The code generator configuration in the `pom.xml` or `build.gradle.kts`
 - The actual test that is being run in any of (depending on what you're using):
   - `org.jooq.mcve.test.java.h2.JavaTest`
   - `org.jooq.mcve.test.java.mysql.JavaTest`
@@ -59,8 +63,16 @@ In addition to the above, you probably need to adapt also:
 
 When you've set up your MCVE, run these statements again:
 
+### Using Maven
+
 ```
 mvn clean verify
+```
+
+### Using Gradle
+
+```
+./gradlew :<relevant subproject>:check
 ```
 
 ## How to submit your MCVE
@@ -69,7 +81,7 @@ Found a way to reproduce the issue using the above procedure? Excellent! Now, ei
 
 ```
 git add .
-git commit -m "MCVE for issue #1234"
+git commit -m "MCVE for issue jOOQ/jOOQ#1234"
 git push
 ```
 
