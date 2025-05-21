@@ -1,0 +1,34 @@
+name: Bug report
+description: Create a report and help us improve
+labels: ["T: Defect"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        <strong>This is for reporting bugs about the MCVE template! Please report issues about jOOQ here, instead: https://github.com/jOOQ/jOOQ/issues/new/choose</strong>
+
+        Please fill in all required fields with as many details as possible. In order to best track issues, please create a new issue for every problem, don't create summary tickets containing several unrelated issues.
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: |
+        Describe what you were expecting the jOOQ-mcve template to do
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: |
+        Describe what you observed the jOOQ-mcve template did instead
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce the problem
+      placeholder: |
+        Here you can also attach log files, screenshots or a video
+    validations:
+      required: true
