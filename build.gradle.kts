@@ -19,5 +19,5 @@ subprojects {
     }
 
     group = "org.jooq"
-    version = "3.21.5"
+    version = "3.21.6"
 }
