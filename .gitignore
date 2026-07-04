@@ -6,3 +6,8 @@
 /target
 **/build
 /*.iml
+
+### Nix / direnv ###
+/.direnv
+/result
+

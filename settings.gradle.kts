@@ -34,3 +34,7 @@ include("jOOQ-mcve-kotlin-postgres")
 include("jOOQ-mcve-kotlin-sqlite")
 include("jOOQ-mcve-kotlin-sqlserver")
 include("jOOQ-mcve-scala-h2")
+
+// Reproducer for jOOQ #<issue>: transactionPublisher leaks an r2dbc connection
+// when its subscription is cancelled mid-BEGIN. See the module README.
+include("jOOQ-mcve-java-r2dbc-txn-leak")
